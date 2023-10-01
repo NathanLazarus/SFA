@@ -1,0 +1,169 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 1in
+\rightmargin 1in
+\bottommargin 1in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+Simplify to set 
+\begin_inset Formula $\kappa=1$
+\end_inset
+
+, 
+\begin_inset Formula $\varepsilon_{i}=\varepsilon$
+\end_inset
+
+
+\begin_inset Formula $\underset{q_{1},q_{2},l_{1},l_{2}}{\max}\left(\frac{q_{1}^{\frac{\varepsilon-1}{\varepsilon}}\left(1-t_{1}\right)+q_{2}^{\frac{\varepsilon-1}{\varepsilon}}\left(1-t_{2}\right)}{q_{1}^{\frac{\varepsilon-1}{\varepsilon}}+q_{2}^{\frac{\varepsilon-1}{\varepsilon}}}\right)\left(q_{1}^{\frac{\varepsilon-1}{\varepsilon}}-w_{1}\ell_{1}+q_{2}^{\frac{\varepsilon-1}{\varepsilon}}-w_{2}\ell_{2}\right)$
+\end_inset
+
+ subject to 
+\begin_inset Formula $q_{1}+q_{2}=\ell_{1}^{\alpha}+\ell_{2}^{\alpha}$
+\end_inset
+
+.
+ Define revenue 
+\begin_inset Formula $z_{i}=q_{i}^{\frac{\varepsilon-1}{\varepsilon}}$
+\end_inset
+
+.
+ Problem becomes 
+\begin_inset Formula $\underset{z_{1},z_{2},l_{1},l_{2}}{\max}\left(\frac{z_{1}\left(1-t_{1}\right)+z_{2}\left(1-t_{2}\right)}{z_{1}+z_{2}}\right)\left(z_{1}-w_{1}\ell_{1}+z_{2}-w_{2}\ell_{2}\right)$
+\end_inset
+
+ subject to 
+\begin_inset Formula $z_{1}^{\frac{\varepsilon}{\varepsilon-1}}+z_{2}^{\frac{\varepsilon}{\varepsilon-1}}=\ell_{1}^{\alpha}+\ell_{2}^{\alpha}$
+\end_inset
+
+.
+ First order conditions:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\ell_{1}: & -w_{1}\left(\frac{z_{1}\left(1-t_{1}\right)+z_{2}\left(1-t_{2}\right)}{z_{1}+z_{2}}\right)+\lambda\alpha\ell_{1}^{\alpha-1}=0\\
+\ell_{2}: & -w_{2}\left(\frac{z_{1}\left(1-t_{1}\right)+z_{2}\left(1-t_{2}\right)}{z_{1}+z_{2}}\right)+\lambda\alpha\ell_{2}^{\alpha-1}=0\\
+z_{1}: & \frac{z_{1}\left(1-t_{1}\right)+z_{2}\left(1-t_{2}\right)}{z_{1}+z_{2}}+\left(z_{1}-w_{1}\ell_{1}+z_{2}-w_{2}\ell_{2}\right)\left(\frac{z_{2}\left(t_{2}-t_{1}\right)}{\left(z_{1}+z_{2}\right)^{2}}\right)-\lambda\frac{\varepsilon}{\varepsilon-1}z_{1}^{-\frac{1}{\varepsilon-1}}=0\\
+z_{2}: & \frac{z_{1}\left(1-t_{1}\right)+z_{2}\left(1-t_{2}\right)}{z_{1}+z_{2}}+\left(z_{1}-w_{1}\ell_{1}+z_{2}-w_{2}\ell_{2}\right)\left(\frac{z_{1}\left(t_{1}-t_{2}\right)}{\left(z_{1}+z_{2}\right)^{2}}\right)-\lambda\frac{\varepsilon}{\varepsilon-1}z_{2}^{-\frac{1}{\varepsilon-1}}=0
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Algebra gives us
+\begin_inset Formula 
+\begin{align*}
+\ell_{1}=\left(\frac{w_{1}}{\lambda\alpha}\left(\frac{z_{1}\left(1-t_{1}\right)+z_{2}\left(1-t_{2}\right)}{z_{1}+z_{2}}\right)\right)^{\frac{1}{\alpha-1}}\\
+\ell_{2}=\left(\frac{w_{2}}{\lambda\alpha}\left(\frac{z_{1}\left(1-t_{1}\right)+z_{2}\left(1-t_{2}\right)}{z_{1}+z_{2}}\right)\right)^{\frac{1}{\alpha-1}}
+\end{align*}
+
+\end_inset
+
+so that 
+\begin_inset Formula $\frac{\ell_{1}}{\ell_{2}}=\left(\frac{w_{1}}{w_{2}}\right)^{\frac{1}{\alpha-1}}$
+\end_inset
+
+.
+ Subtracting FOCs for 
+\begin_inset Formula $z_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $z_{1}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\left(z_{1}-w_{1}\ell_{1}+z_{2}-w_{2}\ell_{2}\right)\left(\frac{t_{1}-t_{2}}{z_{1}+z_{2}}\right)-\lambda\frac{\varepsilon-1}{\varepsilon}\left(z_{2}^{-\frac{1}{\varepsilon}}-z_{1}^{-\frac{1}{\varepsilon}}\right) & =0\\
+\frac{\left(z_{1}-w_{1}\ell_{1}+z_{2}-w_{2}\ell_{2}\right)\left(\frac{t_{1}-t_{2}}{z_{1}+z_{2}}\right)}{\frac{\varepsilon-1}{\varepsilon}\left(z_{2}^{-\frac{1}{\varepsilon}}-z_{1}^{-\frac{1}{\varepsilon}}\right)} & =\lambda
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

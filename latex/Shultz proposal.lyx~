@@ -1,0 +1,566 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing onehalf
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 0.75in
+\rightmargin 1in
+\bottommargin 0.75in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Factor Apportionment and Price Distortions Shultz Proposal
+\end_layout
+
+\begin_layout Author
+Nathan Lazarus and Ian Sapollnik
+\end_layout
+
+\begin_layout Section
+Background
+\end_layout
+
+\begin_layout Standard
+When firms produce and operate in multiple jurisdictions, governments must
+ determine how to tax overall profits while avoiding double taxation.
+ A fundamental problem in doing so is that while revenue can easily be observed
+ at a regional level in a firm's books, profits generally can not.
+ Under the current international corporate tax regime of separate accounting
+ in which firms report value added by location, firms have been able to
+ avoid massive tax liabilities by offshoring profits to 
+\begin_inset Quotes eld
+\end_inset
+
+tax havens
+\begin_inset Quotes erd
+\end_inset
+
+, countries with no corporate tax rate.
+ Recently, there has been increased focus on this issue in the context of
+ international taxation, with the OECD developing an Inclusive Framework
+ on Base Erosion Profit Shifting (BEPS), focused around two pillars.
+ The first is a shift away from separate accounting and towards sales factor
+ apportionment, in which the share of sales occurring in a jurisdiction
+ determine the share of world profits the firm is liable to pay.
+ 
+\end_layout
+
+\begin_layout Standard
+In the United States, state corporate taxes have been assessed using apportionme
+nt formulae for some time.
+ Most states utilized factor apportionment formulas that rely on the location
+ of payroll, property and sales to determine a multi-state firm's liabilities
+ in their state, though in recent years there has been a large shift to
+ only apportioning based on the sales factor.
+ As of 2022, 32 states rely solely on sales in apportioning corporate income
+ tax liabilities.
+ A further 9 states place more than a 50% weight on sales in their apportionment
+ formulas, while just 6 states continue to use three factor formulas.
+ 
+\end_layout
+
+\begin_layout Standard
+This note presents a simple fact about factor apportionment rules: when
+ there is regional heterogeneity in tax rates and firms have monopoly power,
+ it is optimal for firms to raise prices in high-tax regions.
+ This will push prices above the monopolist's optimal price in the absence
+ of apportionment.
+ While these elevated prices lower demand and thus revenue in the high-tax
+ region, this loss can be more than offset by the gains from paying fewer
+ taxes on the inframarginal units that are still sold.
+ Similarly, as has been previously documented, payroll factor apportionment
+ rules have the tendency to reduce employment in higher tax regions.
+ We further show that when firms have monopsony power, the margin of adjustment
+ can be the wages paid to employees rather than employment.
+ In particular, higher tax states see lower wages when taxes are apportioned
+ via payroll factors.
+\end_layout
+
+\begin_layout Section
+Basic Framework
+\end_layout
+
+\begin_layout Standard
+A monopolistic firm operates in two locations, 
+\begin_inset Formula $i=1,2$
+\end_inset
+
+.
+ In each region, there is isoelastic demand for the good 
+\begin_inset Formula $D_{i}\left(p_{i}\right)=\kappa_{i}p_{i}^{-\varepsilon_{i}}$
+\end_inset
+
+.
+ The good is produced using the production technology 
+\begin_inset Formula $q=\ell_{1}^{\alpha}+\ell_{2}^{\alpha}$
+\end_inset
+
+.
+ That is, the good is produced only with labour from both regions with identical
+ production technologies in all regions.
+ The firm faces no transport costs between the two regions.
+ By market clearing, 
+\begin_inset Formula $D_{1}\left(p_{1}\right)+D_{2}\left(p_{2}\right)=\ell_{1}^{\alpha}+\ell_{2}^{\alpha}$
+\end_inset
+
+.
+ The firm pays wage 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+ per unit of labour, determined exogenously, so that total pre-tax profits
+ are 
+\begin_inset Formula $\pi=p_{1}q_{1}+p_{2}q_{2}-w_{1}\ell_{1}-w_{2}\ell_{2}.$
+\end_inset
+
+ The firm chooses prices and labour to maximize post-tax profits.
+\end_layout
+
+\begin_layout Standard
+We first consider the case of separate accounting, which is how international
+ corporate taxes are implemented.
+ The firm's problem is then:
+\begin_inset Formula 
+\begin{align*}
+\underset{p_{1,}p_{2}}{\max} & \left(1-\tau_{1}\right)\pi_{1}+\left(1-\tau_{2}\right)\pi_{2}
+\end{align*}
+
+\end_inset
+
+Then we explore four possible apportionment rules, where the firm faces
+ corporate tax rates 
+\begin_inset Formula $\tau_{i}\left(p_{i},\ell_{i},t_{i}\right)=s\left(p_{i},\ell_{i}\right)\times t_{i}$
+\end_inset
+
+ in each region 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ The rate 
+\begin_inset Formula $\tau_{i}$
+\end_inset
+
+ is applied to the firm's total profits in all regions.
+ 
+\begin_inset Formula $s\left(p_{i},\ell_{i}\right)$
+\end_inset
+
+ determines the share of total profits apportioned to region 
+\begin_inset Formula $i$
+\end_inset
+
+, and 
+\begin_inset Formula $t_{i}$
+\end_inset
+
+ is the local tax rate set by policymakers.
+ The firm maximizes post-tax profits
+\begin_inset Formula 
+\begin{align*}
+\underset{p_{1,}p_{2}}{\max} & \left(1-\tau_{1}-\tau_{2}\right)\pi
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We consider a 100% sales factor apportionment rule, 
+\begin_inset Formula $\tau_{i}\left(p_{i},\ell_{i},t_{i}\right)=\frac{p_{i}q_{i}}{p_{i}q_{i}+p_{-i}q_{-i}}t_{i}$
+\end_inset
+
+, which is the system that currently exists in most U.S.
+ states.
+ We also look at a 100% payroll factor apportionment rule, 
+\begin_inset Formula $\tau_{i}\left(p_{i},\ell_{i},t_{i}\right)=\frac{w_{i}\ell_{i}}{w_{i}\ell_{i}+w_{-i}\ell_{-i}}t_{i}$
+\end_inset
+
+ with an exogenous wage and no monopsony power, and a 50/50 sales and payroll
+ apportionment rule, 
+\begin_inset Formula $\tau_{i}\left(p_{i},\ell_{i},t_{i}\right)=\frac{1}{2}\left(\frac{p_{i}q_{i}}{p_{i}q_{i}+p_{-i}q_{-i}}+\frac{w_{i}\ell_{i}}{w_{i}\ell_{i}+w_{-i}\ell_{-i}}\right)t_{i}$
+\end_inset
+
+.
+ Finally, we also examine the full payroll apportionment rule in the presence
+ of monopsony power.
+ Each of the subsections below outlines a preliminary analysis of the firm's
+ problem.
+\end_layout
+
+\begin_layout Standard
+We present a simple case with two regions.
+ Throughout, we set 
+\begin_inset Formula $t_{2}=0.2$
+\end_inset
+
+, 
+\begin_inset Formula $\kappa_{1}=\kappa_{2}=1$
+\end_inset
+
+, 
+\begin_inset Formula $w_{1}=w_{2}=1$
+\end_inset
+
+ and 
+\begin_inset Formula $\varepsilon_{1}=\varepsilon_{2}=6$
+\end_inset
+
+.
+ The objective is to examine what happens to relative prices, labour demand
+ and quantities, when the tax in region 
+\begin_inset Formula $1$
+\end_inset
+
+ moves from zero to 0.4, while holding the tax in region 2, 
+\begin_inset Formula $t_{2}$
+\end_inset
+
+, fixed at 0.2.
+\end_layout
+
+\begin_layout Subsection
+Separate Accounting
+\end_layout
+
+\begin_layout Standard
+Under separate accounting, the firm is taxed on in profits derived from
+ each region.
+ The firm can choose whether to sell goods produced in region 
+\begin_inset Formula $j$
+\end_inset
+
+ in any region of its choice 
+\begin_inset Formula $i$
+\end_inset
+
+; the cost of transporting a good produced in 
+\begin_inset Formula $j$
+\end_inset
+
+ to 
+\begin_inset Formula $i$
+\end_inset
+
+, an iceberg trade cost, is assumed to be 0.
+ The firm solves the problem 
+\begin_inset Formula 
+\begin{align*}
+\underset{p_{1},p_{2},\ell_{1},\ell_{2},q_{i}^{j}}{\max} & \left(1-t_{1}\right)\left(p_{1}q_{1}^{1}+p_{2}q_{2}^{1}-\ell_{1}w_{1}\right)+\left(1-t_{2}\right)\left(p_{1}q_{1}^{2}+p_{2}q_{2}^{2}-\ell_{2}w_{2}\right)
+\end{align*}
+
+\end_inset
+
+subject to 
+\begin_inset Formula $q_{1}^{1}+q_{2}^{1}=\ell_{1}^{\alpha}$
+\end_inset
+
+, 
+\begin_inset Formula $q_{1}^{2}+q_{2}^{2}=\ell_{2}^{\alpha}$
+\end_inset
+
+, 
+\begin_inset Formula $q_{1}^{1}+q_{1}^{2}=\kappa_{1}p_{1}^{-\varepsilon_{1}}$
+\end_inset
+
+, 
+\begin_inset Formula $q_{2}^{1}+q_{2}^{2}=\kappa_{2}p_{2}^{-\varepsilon_{2}}$
+\end_inset
+
+ and 
+\begin_inset Formula $q_{i}^{j}\geq0$
+\end_inset
+
+.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:sa"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows that under separate accounting, firms keep a constant price and output
+ as tax rates vary; however, they allocate more labour demand to the region
+ with lower taxes.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Separate Accounting
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:sa"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../output/fig_sa.eps
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Sales Factor Apportionment
+\end_layout
+
+\begin_layout Standard
+The optimization condition of the firm can be re-expressed as 
+\begin_inset Formula 
+\begin{align*}
+\underset{p_{1},p_{2},l_{1},l_{2}}{\max}\left(1-\frac{\kappa_{1}p_{1}^{1-\varepsilon_{1}}}{\kappa_{1}p_{1}^{1-\varepsilon_{1}}+\kappa_{2}p_{2}^{1-\varepsilon_{2}}}t_{1}-\frac{\kappa_{2}p_{2}^{1-\varepsilon_{2}}}{\kappa_{1}p_{1}^{1-\varepsilon_{1}}+\kappa_{2}p_{2}^{1-\varepsilon_{2}}}t_{2}\right)\left(\kappa_{1}p_{1}^{1-\varepsilon_{1}}-w_{1}\ell_{1}+\kappa_{2}p_{2}^{1-\varepsilon_{2}}-w_{2}\ell_{2}\right)
+\end{align*}
+
+\end_inset
+
+ subject to 
+\begin_inset Formula 
+\begin{align*}
+\kappa_{1}p_{1}^{-\varepsilon_{1}}+\kappa_{2}p_{2}^{-\varepsilon_{2}}=\ell_{1}^{\alpha}+\ell_{2}^{\alpha}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:sfa"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows that as region 1 increases its tax rate, relative prices rise in
+ region 1, with relative sales falling drastically.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Sales Factor Apportionment
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:sfa"
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename ../output/fig_sfa.eps
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Empirical Approach
+\end_layout
+
+\begin_layout Standard
+Our goal is to develop a more fully fledged model of this phenomenon and
+ take the model to the data to determine whether firms vary prices and wages
+ in response to the incentives we document from these apportionment rules.
+ We will exploit variation in apportionment rules and tax rates as in Suárez
+ Serrato and Zidar (2016) and Giroud and Rauh (2019).
+ We require data on prices set by firms that operate in multiple states
+ and have at least some amount of market power, and the ability to easily
+ change their prices.
+ In particular, it is essential that the firm does not use uniform pricing
+ across the country.
+ We plan to focus on the specific case of gas stations, which tend to be
+ owned by large multi-state firms, have low menu costs, and have strong
+ regional variation in pricing.
+ 
+\end_layout
+
+\begin_layout Standard
+We plan to do an event study around the change in apportionment rules to
+ see if prices adjust.
+ An important challenge is that the extent of price and wage adjustment
+ that is optimal is determined by the elasticity of demand (or elasticity
+ of labor supply, in the case of wages).
+ If demand is perfectly elastic, there's no scope for price adjustment (the
+ case of perfect competition), whereas if demand is very inelastic prices
+ can move a lot to game the tax rules.
+ We could take an elasticity of demand from the IO literature, but if that
+ is an underestimate we might say that firms are not shifting prices by
+ as much as is optimal, when in fact demand is just more elastic.
+ So really we can test joint hypothesis about demand and the price adjustment
+ response.
+\end_layout
+
+\begin_layout Standard
+The naive event study specification is to focus on firms that operate within
+ a state that changed its tax rate or apportionment formula, and to, for
+ instance, examine whether prices in a state rise in response to tax rate
+ increases.
+ But there's another, potentially cleaner source of variation we can use:
+ consider a firm that operates in Massachusetts and Vermont, and another
+ firm that operates in Massachusetts and New Hampshire.
+ If all states use sales factor apportionment, in response to a decrease
+ in the tax rate in New Hampshire, the Massachusetts establishments of the
+ firm that operates in New Hampshire should raise prices while the Massachusetts
+ establishments of the firm that doesn't operate in New Hampshire should
+ keep prices constant.
+\end_layout
+
+\begin_layout Section
+Budget
+\end_layout
+
+\begin_layout Standard
+We plan to use the Shultz funding to make data purchases from Oil Price
+ Information Service (OPIS), which has historical data on gas prices and
+ sales volume at the gas station level going back to 2007.
+ Gas prices are a particularly good context to study because they change
+ with a high frequency; for other goods we worry that menu costs and frictions
+ around changing prices might lead us not to observe an effect on prices.
+ We have a quote with OPIS for $29,000 firm by quarter by state data on
+ gas prices that we would use, but we are currently negotiating with them
+ for a lower price for firm by quarter by year data and for fewer years.
+ We are asking for $11,000 in funding from the Shultz fund, allocated as
+ $8,000 towards Ian's limit and $3,000 towards Nathan's limit.
+\end_layout
+
+\end_body
+\end_document
