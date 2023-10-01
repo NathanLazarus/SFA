@@ -13,4 +13,4 @@ echo "chunks: $nchunks"
 mkdir data/nielsen_extracts/RMS/$year/Clean_Files
 mkdir slurm_output/output$year
 
-code/clean.sh $year $nchunks
+SFA_github/server_code/clean.sh $year $nchunks

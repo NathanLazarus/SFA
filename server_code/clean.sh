@@ -13,5 +13,5 @@ sbatch <<EOT
 
 module load R/4.1.0
 
-Rscript code/cleanNielsenMovement.R $year \${SLURM_ARRAY_TASK_ID}
+Rscript SFA_github/server_code/cleanNielsenMovement.R $year \${SLURM_ARRAY_TASK_ID}
 EOT
