@@ -6,12 +6,10 @@ import sys
 
 simmed_data_vals = pd.read_csv("code/simmed_data/simmed_data_params_only.csv", sep=",")
 
-# TODO: double check that this gives the same thing as Mathematica NB
-# TODO: implement Fajgelbaum et al. formula
+# TODO: add multiple products per firm
 # TODO: add in labor, use payroll weight (also, have we thought about how labor is jointly determined with capital,
 # and increasing the payroll weight relative to the property weight won't do anything if it's Leontief?
 # And similarly for sales if trade costs are infinite—would be good to be explicity about trade costs.)
-# TODO: add in "was_solution_found" diagnostics
 
 def D(p, params):
     t, ε, κ, c, factor_weights = params
