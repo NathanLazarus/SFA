@@ -11,12 +11,26 @@ simmed_data_vals = pd.read_csv("code/simmed_data/simmed_data_params_only.csv", s
 # TODO: add in labor, use payroll weight (also, have we thought about how labor is jointly determined with capital,
 # and increasing the payroll weight relative to the property weight won't do anything if it's Leontief?
 # And similarly for sales if trade costs are infinite—would be good to be explicity about trade costs.)
+# TODO: add in "was_solution_found" diagnostics
 
 def D(p, params):
     t, ε, κ, c, factor_weights = params
     D_values = κ * p ** -ε
     return D_values
 
+
+def inverse_D(q, params):
+    t, ε, κ, c, factor_weights = params
+    prices = (q / κ) ** (-1 / ε)
+    return prices
+
+def Fajgelbaum_et_al_system(q, params):
+    t, ε, κ, c, factor_weights = params
+    print(t)
+    print(q)
+    t_dot_q = sum1(t * q)
+    ttilde = (t - t_dot_q / sum1(q)) / (1 - t_dot_q / sum1(q))
+    return q ** (- 1 / ε) - (ε / (ε - ttilde)) * (ε / (ε - 1)) * c
 
 def τ(p, params):
     t, ε, κ, c, factor_weights = params
@@ -31,10 +45,32 @@ def before_tax_profits(p, params):
     return (p - c) * D(p, params)
 
 def after_tax_profits(p, params):
+    print(p)
+    print(τ(p, params))
+    print(before_tax_profits(p, params))
     return sum1((1-τ(p, params))*before_tax_profits(p, params))
 
 
-def max_profits_casadi(params, x0_vals):
+def was_solution_found(solution, maximum_obj_value):
+    ee_error = sum1(fabs(solution["g"]) ** 4) ** (1/4)
+    # print(f"{ee_error = }")
+    solution_found = True
+    obj = solution["f"]
+    print("Maximum Absolute Error = " + str(ee_error) + ", Objective Value = " + str(obj))
+    if ee_error > 1e-4 or (ee_error == 0 and solution["g"].shape[0] > 0):
+        solution_found = False
+        # sys.exit("No Solution Found, Maximum Absolute Error = " + str(ee_error))
+        if ee_error > 1e-4:
+            print("No Solution Found, Maximum Absolute Error = " + str(ee_error) + " greater than 1e-4, Objective Value = " + str(obj))
+        if ee_error == 0 and solution["g"].shape[0] > 0:
+            print("No Solution Found, Maximum Absolute Error exactly 0")
+    elif obj > maximum_obj_value:
+        solution_found = False
+        # sys.exit("No Solution Found, Objective Value = " + str(obj))
+        print("Inexact Solution Found, Objective Value = " + str(obj) + ", greater than maximum allowed value of " + str(maximum_obj_value))
+    return solution_found
+
+def get_profit_maxmizing_prices(params, x0_vals):
 
     n_jurisdictions = x0_vals.shape[0]
     p = SX.sym("p", n_jurisdictions)
@@ -61,21 +97,68 @@ def max_profits_casadi(params, x0_vals):
         x0=x0,
     )
 
-    return np.array(solution["x"])
+    price_sol = np.array(solution["x"]).squeeze()
 
-jurisdiction_type_1 = pd.DataFrame([{"t": 0, "ε": 6, "κ": 10, "c": 1}])
-jurisdiction_type_2 = pd.DataFrame([{"t": 0.2, "ε": 6, "κ": 10, "c": 1}])
+    solution_found = was_solution_found(solution, 0)
+    if solution_found:
+        return price_sol
+    else:
+        return np.full_like(price_sol, np.nan)
 
-n_jurisdictions_by_type = np.array([1, 3])
+
+def get_p_Fajgelbaum_et_al(params, q_x0_vals):
+
+    n_jurisdictions = q_x0_vals.shape[0]
+    q = SX.sym("q", n_jurisdictions)
+
+    x = q
+    obj = 1
+
+    x0 = DM(q_x0_vals)
+
+    nlp = {
+        "x": x,
+        "f": obj,
+        "g": Fajgelbaum_et_al_system(q, params)
+    }
+
+    print_opt_diagnostics = False
+    if print_opt_diagnostics:
+        ipopt_print_level = 3
+    else:
+        ipopt_print_level = 0
+
+    solver = nlpsol("solver", "ipopt", nlp, {
+                    "ipopt.print_level": ipopt_print_level, "ipopt.tol": 1e-10, 'print_time': 0})
+    solution = solver(
+        x0=x0,
+        lbg=-1e-10,
+        ubg=1e-10
+    )
+    
+
+    q = np.array(solution["x"]).squeeze()
+    
+    p_Fajgelbaum_et_al = inverse_D(q, params)
+          
+    solution_found = was_solution_found(solution, 2)
+    if solution_found:
+        return p_Fajgelbaum_et_al
+    else:
+        return np.full_like(p_Fajgelbaum_et_al, np.nan)
+
+# jurisdiction_type_1 = pd.DataFrame([{"t": 0, "ε": 6, "κ": 10, "c": 1}])
+# jurisdiction_type_2 = pd.DataFrame([{"t": 0.2, "ε": 6, "κ": 10, "c": 1}])
+
+# n_jurisdictions_by_type = np.array([1, 3])
 
 
 unique_firm_years = simmed_data_vals[["firm_id", "year"]].drop_duplicates()
 
-simmed_data_vals["optimal_price"] = np.nan
-simmed_data_vals["quantity"] = np.nan
-simmed_data_vals["revenue"] = np.nan
+# Initialize columns with the optimal prices and Fajgelbaum et al prices to NaN
+simmed_data_vals[["optimal_price", "optimal_quantity", "optimal_revenue",
+                  "price_Fajgelbaum_et_al", "quantity_Fajgelbaum_et_al", "revenue_Fajgelbaum_et_al"]] = np.nan
 simmed_data_vals.set_index(["firm_id", "state", "year"], inplace=True)
-print(simmed_data_vals)
 
 
 for index, row in unique_firm_years.iterrows():
@@ -89,15 +172,25 @@ for index, row in unique_firm_years.iterrows():
     sales_weight = simmed_data_vals_this_firm_year["sales_weight"].to_numpy()
     params_firm_year = [t, ε, κ, c, sales_weight]
     n_jurisdictions = t.shape[0]
-    optimal_price = max_profits_casadi(params_firm_year, np.ones((n_jurisdictions, 1))).squeeze()
-    quantity = D(optimal_price, params_firm_year)
-    revenue = quantity * optimal_price
+    optimal_price = get_profit_maxmizing_prices(params_firm_year, np.ones((n_jurisdictions, 1)))
+    optimal_quantity = D(optimal_price, params_firm_year)
+    optimal_revenue = optimal_quantity * optimal_price
     π = after_tax_profits(optimal_price.squeeze(), params_firm_year) # this is a scalar, total worldwide profits
-    simmed_data_vals_this_firm_year = simmed_data_vals_this_firm_year.assign(optimal_price=optimal_price)
-    simmed_data_vals_this_firm_year = simmed_data_vals_this_firm_year.assign(quantity=quantity)
-    simmed_data_vals_this_firm_year = simmed_data_vals_this_firm_year.assign(revenue=revenue)
+    price_Fajgelbaum_et_al = get_p_Fajgelbaum_et_al(params_firm_year, np.ones((n_jurisdictions, 1)))
+    quantity_Fajgelbaum_et_al = D(price_Fajgelbaum_et_al, params_firm_year)
+    revenue_Fajgelbaum_et_al = quantity_Fajgelbaum_et_al * price_Fajgelbaum_et_al
+    π_Fajgelbaum_et_al = after_tax_profits(price_Fajgelbaum_et_al.squeeze(), params_firm_year)  # this is a scalar, total worldwide profits
+    simmed_data_vals_this_firm_year = simmed_data_vals_this_firm_year.assign(
+        optimal_price=optimal_price,
+        optimal_quantity=optimal_quantity,
+        optimal_revenue=optimal_revenue,
+        price_Fajgelbaum_et_al=price_Fajgelbaum_et_al,
+        quantity_Fajgelbaum_et_al=quantity_Fajgelbaum_et_al,
+        revenue_Fajgelbaum_et_al=revenue_Fajgelbaum_et_al,
+    )
 
-    simmed_data_vals.update(simmed_data_vals_this_firm_year[["optimal_price", "quantity", "revenue"]])
+    simmed_data_vals.update(simmed_data_vals_this_firm_year[["optimal_price", "optimal_quantity", "optimal_revenue", "price_Fajgelbaum_et_al", "quantity_Fajgelbaum_et_al", "revenue_Fajgelbaum_et_al"]])
+    print(simmed_data_vals)
 
 
-simmed_data_vals.to_csv("code/simmed_data/simmed_data_vals_with_optimal_prices.csv", index=False)
+simmed_data_vals.to_csv("code/simmed_data/simmed_data_vals_with_optimal_prices.csv", index=True)
