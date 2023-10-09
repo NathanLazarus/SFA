@@ -4,8 +4,11 @@ import pandas as pd
 import sys
 
 
-simmed_data_vals = pd.read_csv("code/simmed_data/simmed_data_params_only.csv", sep=",")
+# simmed_data_vals = pd.read_csv("code/simmed_data/simmed_data_params_only.csv", sep=",")
+simmed_data_vals = pd.read_csv("code/simmed_data/SingleFirm50States_params_only.csv", sep=",")
 
+
+# TODO: vary kappas to match an empirical share of sales by state
 # TODO: add multiple products per firm
 # TODO: add in labor, use payroll weight (also, have we thought about how labor is jointly determined with capital,
 # and increasing the payroll weight relative to the property weight won't do anything if it's Leontief?
@@ -43,9 +46,6 @@ def before_tax_profits(p, params):
     return (p - c) * D(p, params)
 
 def after_tax_profits(p, params):
-    print(p)
-    print(τ(p, params))
-    print(before_tax_profits(p, params))
     return sum1((1-τ(p, params))*before_tax_profits(p, params))
 
 
