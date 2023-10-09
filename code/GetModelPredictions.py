@@ -174,7 +174,8 @@ for index, row in unique_firm_years.iterrows():
     sales_weight = simmed_data_vals_this_firm_year["sales_weight"].to_numpy()
     params_firm_year = [t, ε, κ, c, sales_weight]
     n_jurisdictions = t.shape[0]
-    optimal_price = get_profit_maxmizing_prices(params_firm_year, np.ones((n_jurisdictions, 1)))
+    initial_price_guess_everywhere = 0.48
+    optimal_price = get_profit_maxmizing_prices(params_firm_year, np.full(n_jurisdictions, initial_price_guess_everywhere))
     optimal_quantity = D(optimal_price, params_firm_year)
     optimal_revenue = optimal_quantity * optimal_price
     π = after_tax_profits(optimal_price.squeeze(), params_firm_year) # this is a scalar, total worldwide profits
