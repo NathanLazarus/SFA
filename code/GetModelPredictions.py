@@ -27,8 +27,6 @@ def inverse_D(q, params):
 
 def Fajgelbaum_et_al_system(q, params):
     t, ε, κ, c, factor_weights = params
-    print(t)
-    print(q)
     t_dot_q = sum1(t * q)
     ttilde = (t - t_dot_q / sum1(q)) / (1 - t_dot_q / sum1(q))
     return q ** (- 1 / ε) - (ε / (ε - ttilde)) * (ε / (ε - 1)) * c
@@ -49,19 +47,22 @@ def after_tax_profits(p, params):
     return sum1((1-τ(p, params))*before_tax_profits(p, params))
 
 
-def was_solution_found(solution, maximum_obj_value):
+def was_solution_found(solution, solver_stats, maximum_obj_value):
     ee_error = sum1(fabs(solution["g"]) ** 4) ** (1/4)
     # print(f"{ee_error = }")
     solution_found = True
     obj = solution["f"]
     print("Maximum Absolute Error = " + str(ee_error) + ", Objective Value = " + str(obj))
-    if ee_error > 1e-4 or (ee_error == 0 and solution["g"].shape[0] > 0):
+    solver_succeeded = solver_stats["return_status"] == "Solve_Succeeded" and solver_stats["success"] == True
+    if ee_error > 1e-4 or (ee_error == 0 and solution["g"].shape[0] > 0) or not solver_succeeded:
         solution_found = False
         # sys.exit("No Solution Found, Maximum Absolute Error = " + str(ee_error))
         if ee_error > 1e-4:
             print("No Solution Found, Maximum Absolute Error = " + str(ee_error) + " greater than 1e-4, Objective Value = " + str(obj))
         if ee_error == 0 and solution["g"].shape[0] > 0:
             print("No Solution Found, Maximum Absolute Error exactly 0")
+        if not solver_succeeded:
+            print(solver_stats)
     elif obj > maximum_obj_value:
         solution_found = False
         # sys.exit("No Solution Found, Objective Value = " + str(obj))
@@ -97,7 +98,7 @@ def get_profit_maxmizing_prices(params, x0_vals):
 
     price_sol = np.array(solution["x"]).squeeze()
 
-    solution_found = was_solution_found(solution, 0)
+    solution_found = was_solution_found(solution, solver.stats(), 0)
     if solution_found:
         return price_sol
     else:
@@ -139,7 +140,7 @@ def get_p_Fajgelbaum_et_al(params, q_x0_vals):
     
     p_Fajgelbaum_et_al = inverse_D(q, params)
           
-    solution_found = was_solution_found(solution, 2)
+    solution_found = was_solution_found(solution, solver.stats(), 2)
     if solution_found:
         return p_Fajgelbaum_et_al
     else:
@@ -163,6 +164,9 @@ for index, row in unique_firm_years.iterrows():
     this_firm_id = row["firm_id"]
     this_year = row["year"]
     simmed_data_vals_this_firm_year = simmed_data_vals.loc[(this_firm_id, slice(None), this_year), :]
+    print("firm is " + str(this_firm_id) + " year is " + str(this_year))
+    print("states")
+    print(simmed_data_vals_this_firm_year.index)
     t = simmed_data_vals_this_firm_year["tax_rate"].to_numpy()
     ε = simmed_data_vals_this_firm_year["epsilon"].to_numpy()
     κ = simmed_data_vals_this_firm_year["kappa"].to_numpy()
@@ -170,7 +174,8 @@ for index, row in unique_firm_years.iterrows():
     sales_weight = simmed_data_vals_this_firm_year["sales_weight"].to_numpy()
     params_firm_year = [t, ε, κ, c, sales_weight]
     n_jurisdictions = t.shape[0]
-    optimal_price = get_profit_maxmizing_prices(params_firm_year, np.ones((n_jurisdictions, 1)))
+    initial_price_guess_everywhere = 0.48
+    optimal_price = get_profit_maxmizing_prices(params_firm_year, np.full(n_jurisdictions, initial_price_guess_everywhere))
     optimal_quantity = D(optimal_price, params_firm_year)
     optimal_revenue = optimal_quantity * optimal_price
     π = after_tax_profits(optimal_price.squeeze(), params_firm_year) # this is a scalar, total worldwide profits
@@ -188,7 +193,6 @@ for index, row in unique_firm_years.iterrows():
     )
 
     simmed_data_vals.update(simmed_data_vals_this_firm_year[["optimal_price", "optimal_quantity", "optimal_revenue", "price_Fajgelbaum_et_al", "quantity_Fajgelbaum_et_al", "revenue_Fajgelbaum_et_al"]])
-    print(simmed_data_vals)
 
 
 simmed_data_vals.to_csv("code/simmed_data/simmed_data_vals_with_optimal_prices.csv", index=True)
