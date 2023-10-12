@@ -5,7 +5,7 @@ Walmart_revenue_mil = 611000
 Total_PCE_mil = 17511000
 
 eps_val_everywhere = 6
-marginal_cost_everywhere = 0.4
+marginal_cost_everywhere = 5/6
 
 
 
@@ -62,12 +62,12 @@ tax = unique(firm_characteristics[, .(state, year)])
 
 tax[, `:=`(
   sales_weight = 1,
-  tax_rate = 0.04,
+  tax_rate = 0,
   payroll_weight = 0,
   property_weight = 0
 )]
 
-tax[state == "California" & year == 2011, tax_rate := 0.08]
+tax[state == "California" & year == 2011, tax_rate := 0.04]
 
 
 
