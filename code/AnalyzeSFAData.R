@@ -5,8 +5,17 @@ overall_with_optimal_values = fread("code/simmed_data/simmed_data_vals_with_opti
 # Where McLure goes wrong: if you pass along a sales tax, you're changing the markup.
 # One clear case: consider the case of a 100% SFA tax. "McLure": increase prices by 100%. Actual firms: indifferent
 
+overall_with_optimal_values[, perceived_sales_tax_rate := 1 + tax_rate * 1 / epsilon]
+overall_with_optimal_values[, perceived_sales_tax_price := epsilon / (epsilon - 1) * cost * perceived_sales_tax_rate]
+overall_with_optimal_values[, perceived_sales_tax_quantity := kappa * perceived_sales_tax_price ^ -epsilon]
+overall_with_optimal_values[, perceived_sales_tax_revenue := perceived_sales_tax_price * perceived_sales_tax_quantity]
+overall_with_optimal_values[, perceived_sales_tax_state_profits := perceived_sales_tax_quantity * (perceived_sales_tax_price - cost)]
+overall_with_optimal_values[, perceived_sales_tax_sales_share := perceived_sales_tax_revenue / sum(perceived_sales_tax_revenue), .(year)]
+overall_with_optimal_values[, perceived_sales_tax_state_tax_bill := perceived_sales_tax_sales_share * tax_rate * sum(perceived_sales_tax_state_profits), .(year)]
+
+
 overall_with_optimal_values[, sales_tax_producer_price := epsilon / (epsilon - 1) * cost]
-overall_with_optimal_values[, sales_tax_consumer_price := sales_tax_producer_price * (1 + tax_rate)]
+overall_with_optimal_values[, sales_tax_consumer_price := sales_tax_producer_price * (1 + tax_rate * 1 / epsilon)]
 overall_with_optimal_values[, sales_tax_quantity := kappa * sales_tax_consumer_price ^ -epsilon]
 overall_with_optimal_values[, sales_tax_profits := sales_tax_quantity * (sales_tax_producer_price - cost)]
 
@@ -27,10 +36,11 @@ overall_with_optimal_values[
   .(
     total_post_tax_naive_profits = sum(naive_state_profits) - sum(naive_state_tax_bill),
     total_post_tax_optimal_profits = sum(optimal_state_profits) - sum(optimal_state_tax_bill),
-    total_sales_tax_profits = sum(sales_tax_profits)
+    total_sales_tax_profits = sum(perceived_sales_tax_state_profits) - sum(perceived_sales_tax_state_tax_bill)
   ),
   .(year)
 ]
+
 # 101226.0
 
 
