@@ -17,40 +17,60 @@ simmed_data_vals = pd.read_csv("code/simmed_data/" + data_name + "_params_only.c
 # TODO: get separate tax to work with cross-hauling, be explicit about production
 
 def D(p, params):
-    taxes, ε, κ, c, factor_weights = params
+    taxes, ε, κ, α, c, w, r, factor_weights = params
     D_values = κ * p ** -ε
     return D_values
 
 
 def inverse_D(q, params):
-    taxes, ε, κ, c, factor_weights = params
+    taxes, ε, κ, α, c, w, r, factor_weights = params
     prices = (q / κ) ** (-1 / ε)
     return prices
 
 def Fajgelbaum_et_al_system(q, params):
-    taxes, ε, κ, c, factor_weights = params
+    taxes, ε, κ, α, c, w, r, factor_weights = params
     SFA_tax_rate, separate_acct_tax_rate, sales_tax_rate, payroll_tax_rate = taxes
     t_dot_q = sum1(SFA_tax_rate * q)
     ttilde = (SFA_tax_rate - t_dot_q / sum1(q)) / (1 - t_dot_q / sum1(q))
     return q ** (- 1 / ε) - (ε / (ε - ttilde)) * (ε / (ε - 1)) * c
 
-def all_jurisdictions_SFA_tax_rate_on_profits_from_state_s(p, params):
-    taxes, ε, κ, c, factor_weights = params
+def all_jurisdictions_SFA_tax_rate_on_profits_from_state_s(p, q_consumed, params):
+    taxes, ε, κ, α, c, w, r, factor_weights = params
     SFA_tax_rate, separate_acct_tax_rate, sales_tax_rate, payroll_tax_rate = taxes
     sales_weight = factor_weights
-    sales_revenue = p * D(p, params)
+    sales_revenue = p * q_consumed
     total_sales_revenue = sum1(sales_revenue)
-    taxes_on_total_profits_by_jurisdiction = sales_weight * sales_revenue / total_sales_revenue * SFA_tax_rate
+    taxes_on_total_profits_in_s_by_jurisdiction = sales_weight * sales_revenue / total_sales_revenue * SFA_tax_rate
+    return sum1(taxes_on_total_profits_in_s_by_jurisdiction)
+
+def after_tax_profits(p, q_consumed, l, k, m, params):
+    taxes, ε, κ, α, c, w, r, factor_weights = params
+    SFA_tax_rate, separate_acct_tax_rate, sales_tax_rate, payroll_tax_rate = taxes
+
+    revenue = p * q_consumed
+    production_cost = c * m + w * l + r * k
+    return sum1((1 - all_jurisdictions_SFA_tax_rate_on_profits_from_state_s(p, q_consumed, params) - separate_acct_tax_rate) * (revenue - production_cost) - sales_tax_rate * revenue) # - payroll_tax_rate * sum1(p * L(p, params))
+
+def production(l, k, m, params):
+    taxes, ε, κ, α, c, w, r, factor_weights = params
+    return l + k + m # l ** α * k ** (1 - α) + m
+
+def naive_all_jurisdictions_SFA_tax_rate_on_profits_from_state_s(p, q_consumed, params):
+    taxes, ε, κ, α, c, w, r, factor_weights = params
+    SFA_tax_rate, separate_acct_tax_rate, sales_tax_rate, payroll_tax_rate = taxes
+    sales_weight = factor_weights
+    n_jurisdictions = ε.shape[0]
+    naive_sales_share = 1 / n_jurisdictions
+    taxes_on_total_profits_by_jurisdiction = sales_weight * naive_sales_share * SFA_tax_rate
     return sum1(taxes_on_total_profits_by_jurisdiction)
 
-def before_tax_profits(p, params):
-    taxes, ε, κ, c, factor_weights = params
-    return (p - c) * D(p, params)
-
-def after_tax_profits(p, params):
-    taxes, ε, κ, c, factor_weights = params
+def after_tax_profits_naive(p, q_consumed, l, k, m, params):
+    taxes, ε, κ, α, c, w, r, factor_weights = params
     SFA_tax_rate, separate_acct_tax_rate, sales_tax_rate, payroll_tax_rate = taxes
-    return sum1((1 - all_jurisdictions_SFA_tax_rate_on_profits_from_state_s(p, params) - separate_acct_tax_rate) * before_tax_profits(p, params) - sales_tax_rate * p * D(p, params)) # - payroll_tax_rate * sum1(p * L(p, params))
+
+    revenue = p * q_consumed
+    production_cost = c * m + w * l + r * k
+    return sum1((1 - naive_all_jurisdictions_SFA_tax_rate_on_profits_from_state_s(p, q_consumed, params) - separate_acct_tax_rate) * (revenue - production_cost) - sales_tax_rate * revenue) # - payroll_tax_rate * sum1(p * L(p, params))
 
 
 def was_solution_found(solution, solver_stats, maximum_obj_value):
@@ -76,19 +96,37 @@ def was_solution_found(solution, solver_stats, maximum_obj_value):
         print("Inexact Solution Found, Objective Value = " + str(obj) + ", greater than maximum allowed value of " + str(maximum_obj_value))
     return solution_found
 
-def get_profit_maxmizing_prices(params, x0_vals):
+def get_profit_maxmizing_prices(profit_func, params, x0_vals):
 
     n_jurisdictions = x0_vals.shape[0]
-    p = SX.sym("p", n_jurisdictions)
+    # p = SX.sym("p", n_jurisdictions)
+    trade_matrix = SX.sym("trade_matrix", n_jurisdictions, n_jurisdictions)
+    l = SX.sym("l", n_jurisdictions)
+    k = SX.sym("k", n_jurisdictions)
+    m = SX.sym("m", n_jurisdictions)
+    p = SX.sym("m", n_jurisdictions)
 
-    x = p
-    obj = -after_tax_profits(p, params)
+    x = vertcat(trade_matrix.reshape((n_jurisdictions ** 2, 1)), l, k, m, p)
+    print(x)
 
-    x0 = DM(x0_vals)
+    q_consumed = sum1(trade_matrix).reshape((n_jurisdictions, 1))
+    # p = inverse_D(q_consumed, params)
+    q_produced = sum2(trade_matrix)
+
+    production_constraint = q_produced - production(l, k, m, params)
+    demand_constraint = q_consumed - D(p, params)
+
+    constraint = vertcat(production_constraint, demand_constraint)
+
+    obj = -profit_func(p, q_consumed, l, k, m, params)
+
+    x0 = DM(np.full((x.shape[0], x.shape[1]), x0_vals[0]))
+    # x0 = DM(np.array(1, 0, 0, 1, 1))
 
     nlp = {
         "x": x,
         "f": obj,
+        "g": constraint
     }
 
     print_opt_diagnostics = False
@@ -101,9 +139,15 @@ def get_profit_maxmizing_prices(params, x0_vals):
                     "ipopt.print_level": ipopt_print_level, "ipopt.tol": 1e-10, 'print_time': 0})
     solution = solver(
         x0=x0,
+        lbx=0,
+        lbg=-1e-10,
+        ubg=1e-10,
     )
 
     price_sol = np.array(solution["x"]).squeeze()
+    print(solution)
+    print(price_sol[n_jurisdictions ** 2 + 3 * n_jurisdictions:])
+    print(D(price_sol[n_jurisdictions ** 2 + 3 * n_jurisdictions:], params))
 
     solution_found = was_solution_found(solution, solver.stats(), 0)
     if solution_found:
@@ -184,36 +228,40 @@ for index, row in unique_firm_years.iterrows():
     taxes = [SFA_tax_rate, separate_acct_tax_rate, sales_tax_rate, payroll_tax_rate]
     ε = simmed_data_vals_this_firm_year["epsilon"].to_numpy()
     κ = simmed_data_vals_this_firm_year["kappa"].to_numpy()
+    α = simmed_data_vals_this_firm_year["alpha"].to_numpy()
     c = simmed_data_vals_this_firm_year["cost"].to_numpy()
+    w = simmed_data_vals_this_firm_year["wage"].to_numpy()
+    r = simmed_data_vals_this_firm_year["rental_rate"].to_numpy()
     sales_weight = simmed_data_vals_this_firm_year["sales_weight"].to_numpy()
-    params_firm_year = [taxes, ε, κ, c, sales_weight]
+    params_firm_year = [taxes, ε, κ, α, c, w, r, sales_weight]
     n_jurisdictions = len(simmed_data_vals_this_firm_year)
     initial_price_guess_everywhere = 1
-    optimal_price = get_profit_maxmizing_prices(params_firm_year, np.full(n_jurisdictions, initial_price_guess_everywhere))
-    optimal_quantity = D(optimal_price, params_firm_year)
-    optimal_revenue = optimal_quantity * optimal_price
-    π = after_tax_profits(optimal_price.squeeze(), params_firm_year) # this is a scalar, total worldwide profits
-    price_Fajgelbaum_et_al = get_p_Fajgelbaum_et_al(params_firm_year, np.ones((n_jurisdictions, 1)))
-    quantity_Fajgelbaum_et_al = D(price_Fajgelbaum_et_al, params_firm_year)
-    revenue_Fajgelbaum_et_al = quantity_Fajgelbaum_et_al * price_Fajgelbaum_et_al
-    π_Fajgelbaum_et_al = after_tax_profits(price_Fajgelbaum_et_al.squeeze(), params_firm_year)  # this is a scalar, total worldwide profits
-    simmed_data_vals_this_firm_year = simmed_data_vals_this_firm_year.assign(
-        optimal_price=optimal_price,
-        optimal_quantity=optimal_quantity,
-        optimal_revenue=optimal_revenue,
-        price_Fajgelbaum_et_al=price_Fajgelbaum_et_al,
-        quantity_Fajgelbaum_et_al=quantity_Fajgelbaum_et_al,
-        revenue_Fajgelbaum_et_al=revenue_Fajgelbaum_et_al,
-    )
+    optimal_price = get_profit_maxmizing_prices(after_tax_profits, params_firm_year, np.full(n_jurisdictions, initial_price_guess_everywhere))
+    # optimal_quantity = D(optimal_price, params_firm_year)
+    # optimal_revenue = optimal_quantity * optimal_price
+    # π = after_tax_profits(optimal_price.squeeze(), params_firm_year) # this is a scalar, total worldwide profits
+    # optimal_price_naive = get_profit_maxmizing_prices(after_tax_profits_naive, params_firm_year, np.full(n_jurisdictions, initial_price_guess_everywhere))
+    # price_Fajgelbaum_et_al = get_p_Fajgelbaum_et_al(params_firm_year, np.ones((n_jurisdictions, 1)))
+    # quantity_Fajgelbaum_et_al = D(price_Fajgelbaum_et_al, params_firm_year)
+    # revenue_Fajgelbaum_et_al = quantity_Fajgelbaum_et_al * price_Fajgelbaum_et_al
+    # π_Fajgelbaum_et_al = after_tax_profits(price_Fajgelbaum_et_al.squeeze(), params_firm_year)  # this is a scalar, total worldwide profits
+    # simmed_data_vals_this_firm_year = simmed_data_vals_this_firm_year.assign(
+    #     optimal_price=optimal_price,
+    #     optimal_quantity=optimal_quantity,
+    #     optimal_revenue=optimal_revenue,
+    #     price_Fajgelbaum_et_al=price_Fajgelbaum_et_al,
+    #     quantity_Fajgelbaum_et_al=quantity_Fajgelbaum_et_al,
+    #     revenue_Fajgelbaum_et_al=revenue_Fajgelbaum_et_al,
+    # )
 
-    simmed_data_vals.update(simmed_data_vals_this_firm_year[[
-        "optimal_price",
-        "optimal_quantity",
-        "optimal_revenue",
-        "price_Fajgelbaum_et_al",
-        "quantity_Fajgelbaum_et_al",
-        "revenue_Fajgelbaum_et_al",
-        ]])
+    # simmed_data_vals.update(simmed_data_vals_this_firm_year[[
+    #     "optimal_price",
+    #     "optimal_quantity",
+    #     "optimal_revenue",
+    #     "price_Fajgelbaum_et_al",
+    #     "quantity_Fajgelbaum_et_al",
+    #     "revenue_Fajgelbaum_et_al",
+    #     ]])
 
 
 simmed_data_vals.to_csv("code/simmed_data/" + data_name + "_with_optimal_prices.csv", index=True)
