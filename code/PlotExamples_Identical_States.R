@@ -23,6 +23,12 @@ year_descr_order = c("1 state", "2 states", "3 states", "5 states", "10 states",
 
 pricing_data[, year_descr_to_plot := factor(year_descr, levels = year_descr_order)]
 
+pricing_data[, total_firm_revenue := sum(optimal_revenue), .(firm_id, year)]
+pricing_data[, total_firm_cost := sum(cost * optimal_quantity), .(firm_id, year)]
+pricing_data[, firm_resulting_sales_weighted_markup := (total_firm_revenue - total_firm_cost) / total_firm_cost]
+pricing_data[, state_markup := (optimal_price - cost) / cost]
+pricing_data[, firm_resulting_sales_weighted_markup2 := sum(state_markup * optimal_quantity / sum(optimal_quantity)), .(firm_id, year)]
+
 ggplot(pricing_data[state <= 5], aes(fill=state_descr, y=price_to_plot, x=year_descr_to_plot)) + 
   geom_bar(position="dodge", stat="identity") +
   scale_y_continuous(labels=plus1_formatter) +
