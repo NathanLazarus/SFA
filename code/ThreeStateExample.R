@@ -1,17 +1,20 @@
 setwd("/Users/nathan/Downloads/SFA")
 pacman::p_load(data.table, foreach, iterators)
 
-eps_val_everywhere = 6 # markup of 6 / (6 - 1) = 20%
+eps_val_everywhere = 6 # markup of 1 / (6 - 1) = 20%
 materials_cost = 100 # 1 # 5/6
-wage_val = 5/12 # 1
-rental_rate_val = 5/12 # 1
+wage_val = 1 # 5/12 # 1
+rental_rate_val = 1 # 5/12 # 1
 alpha_val = 0.5 # 0.3
 A_val = 1
-iceberg_trade_cost_everywhere = 0.01
+iceberg_trade_cost_everywhere = 0 # 0.02
 non_iceberg_trade_cost_everywhere = 0
-Lbar_val = 100 # 27.848558398 # 1
-rho_val = 3.8 # midpoint of Kroft et al. construction estimates, markdown of 1 / (3.8 + 1) = 21%
-# rho_val = Inf
+Lbar_val = 27.848558398 # 1
+# rho_val = 3.8 # midpoint of Kroft et al. construction estimates, markdown of 1 / (3.8 + 1) = 21%
+rho_val = Inf
+FA_tax_rate_everywhere = 0 # 0.04 # 0 
+
+FA_tax_increase_in_raising_state = eps_val_everywhere * (1 - 1 / 1.04) # 0.05940594 (to get that the sales tax prediction is 1.04)
 
 CJ.dt = function(X,Y) {
   stopifnot(is.data.table(X),is.data.table(Y))
@@ -48,16 +51,18 @@ three_state_data[, `:=`(
   sales_weight = 1,
   payroll_weight = 0,
   property_weight = 0,
-  FA_tax_rate = 0,
+  FA_tax_rate = FA_tax_rate_everywhere,
   separate_acct_tax_rate = 0,
   sales_tax_rate = 0,
   payroll_tax_rate = 0
 )]
 
-tax_rate = eps_val_everywhere * (1 - 1 / 1.04) # 0.05940594 (to get that the sales tax prediction is 1.04)
-three_state_data[state == 1 & year == 0, sales_tax_rate := tax_rate * 1 / eps_val_everywhere] # 1 - 1/1.06] # 0.05660377
-# three_state_data[state == 1 & year > 0, FA_tax_rate := tax_rate] # 1 - 1/1.06] # 0.05660377
-three_state_data[state == 1 & year > 0, separate_acct_tax_rate := tax_rate]
+
+# three_state_data[state == 1 & year == 0, sales_tax_rate := FA_tax_rate_in_raising_state * 1 / eps_val_everywhere]
+three_state_data[state == 1 & year > 0, FA_tax_rate := FA_tax_rate_everywhere + FA_tax_increase_in_raising_state]
+# three_state_data[state == 1 & year > 0, separate_acct_tax_rate := FA_tax_rate_in_raising_state]
+# three_state_data[state == 3, FA_tax_rate := 0]
+# three_state_data[state == 1, epsilon := 4]
 
 trade_costs =
   foreach(firm_year = iter(unique(three_state_data[, .(firm_id, year)]), by = "row"), .combine = rbind) %do% {
@@ -76,9 +81,10 @@ trade_costs[producing_state == consuming_state, `:=`(
   non_iceberg_trade_cost = 0)
   ]
 
+# trade_costs[producing_state == 1 & consuming_state == 2, iceberg_trade_cost := 0.4]
 
 # three_state_data = three_state_data[year %in% c(1, 2, 3)]
-three_state_data = three_state_data[year %in% c(1)]
+three_state_data = three_state_data[year %in% c(2)]
 
 fwrite(three_state_data, "code/simmed_data/ThreeStates_params_only.csv")
 

@@ -1,4 +1,3 @@
-firm_id,state,year,cost,wage,rental_rate,epsilon,kappa,alpha,A,Lbar,rho,sales_weight,payroll_weight,property_weight,FA_tax_rate,separate_acct_tax_rate,sales_tax_rate,payroll_tax_rate,optimal_price,optimal_quantity,optimal_revenue,price_Fajgelbaum_et_al,quantity_Fajgelbaum_et_al,revenue_Fajgelbaum_et_al
-1,1,1,100,0.416666666666667,0.416666666666667,6,1,0.5,1,27.848558398,3.8,1,0,0,0.230769230769231,0.230769230769231,0,0,,,,,,
-1,1,2,100,0.416666666666667,0.416666666666667,6,1,0.5,1,27.848558398,3.8,1,0,0,0.230769230769231,0.230769230769231,0,0,,,,,,
-1,2,2,100,0.416666666666667,0.416666666666667,6,1,0.5,1,27.848558398,3.8,1,0,0,0.0,0.0,0,0,,,,,,
+firm_id,year,state,cost,wage,rental_rate,epsilon,kappa,alpha,A,Lbar,rho,sales_weight,payroll_weight,property_weight,FA_tax_rate,separate_acct_tax_rate,sales_tax_rate,payroll_tax_rate,optimal_price,optimal_quantity_consumed,optimal_quantity_produced,optimal_state_revenue,optimal_state_cost,optimal_profits,optimal_state_profits,price_Fajgelbaum_et_al,quantity_Fajgelbaum_et_al,revenue_Fajgelbaum_et_al
+1,2,1,100,1,1,6,1,0.5,1,27.848558398,inf,1,0,0,0.230769230769231,0,0,0,2.4583809641451273,0.004530079876321445,0.00519686384855265,0.011136662134005553,0.010392727517584561,0.003730960947733768,0.00238314364095126,,,
+1,2,2,100,1,1,6,1,0.5,1,27.848558398,inf,1,0,0,0.0,0,0,0,2.3548982379569376,0.005863647820783713,0.005196863848552509,0.013808293921163603,0.010392727517584278,0.003730960947733768,0.001845358002274134,,,
