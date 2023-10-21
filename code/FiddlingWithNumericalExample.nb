@@ -1,0 +1,219 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      7498,        211]
+NotebookOptionsPosition[      6801,        190]
+NotebookOutlinePosition[      7194,        206]
+CellTagsIndexPosition[      7151,        203]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"postTaxProfits", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"qH", " ", "pH"}], "+", 
+      RowBox[{"qL", " ", "pL"}], "-", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"qH", " ", "+", "qL"}], ")"}], "c"}]}], ")"}], 
+    RowBox[{"(", 
+     RowBox[{"1", "-", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         FractionBox[
+          RowBox[{"qH", " ", "pH"}], 
+          RowBox[{
+           RowBox[{"qH", " ", "pH"}], " ", "+", 
+           RowBox[{"qL", " ", "pL", " "}]}]], "tH"}], "+", 
+        RowBox[{
+         FractionBox[
+          RowBox[{"qL", " ", "pL", " "}], 
+          RowBox[{
+           RowBox[{"qH", " ", "pH"}], " ", "+", 
+           RowBox[{"qL", " ", "pL", " "}]}]], "tL"}]}], ")"}]}], ")"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"preTaxProfits", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"preTaxHigh", "->", 
+      RowBox[{
+       RowBox[{"qH", " ", "pH"}], "-", 
+       RowBox[{
+        RowBox[{"(", "qH", " ", ")"}], "c"}]}]}], ",", 
+     RowBox[{"preTaxLow", "->", 
+      RowBox[{
+       RowBox[{"qL", " ", "pL"}], "-", 
+       RowBox[{
+        RowBox[{"(", "qL", ")"}], "c"}]}]}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Join", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"postTax", "->", "postTaxProfits"}], "}"}], ",", 
+      "preTaxProfits"}], "]"}], "/.", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"qH", " ", "->", " ", "9"}], ",", 
+      RowBox[{"pH", "->", "1.05"}], ",", 
+      RowBox[{"qL", "->", "11"}], ",", 
+      RowBox[{"pL", "->", "0.95"}], ",", 
+      RowBox[{"tH", "->", "0.5"}], ",", 
+      RowBox[{"tL", "->", "0.1"}], ",", 
+      RowBox[{"c", "->", "0.5"}]}], "}"}]}], ",", 
+   RowBox[{
+    RowBox[{"Join", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"postTax", "->", "postTaxProfits"}], "}"}], ",", 
+      "preTaxProfits"}], "]"}], "/.", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"qH", " ", "->", " ", "10"}], ",", 
+      RowBox[{"pH", "->", "1"}], ",", 
+      RowBox[{"qL", "->", "10"}], ",", 
+      RowBox[{"pL", "->", "1"}], ",", 
+      RowBox[{"tH", "->", "0.5"}], ",", 
+      RowBox[{"tL", "->", "0.1"}], ",", 
+      RowBox[{"c", "->", "0.5"}]}], "}"}]}]}], "}"}]}], "Input",
+ CellChangeTimes->{{3.906890264089055*^9, 3.9068907398981667`*^9}, {
+  3.906890777671248*^9, 3.9068908085557003`*^9}, {3.906890841962688*^9, 
+  3.9068908434142427`*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"378d5a96-3d74-4770-a134-1d9ee2eb81a4"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"postTax", "\[Rule]", "7.029497487437185`"}], ",", 
+     RowBox[{"preTaxHigh", "\[Rule]", "4.950000000000001`"}], ",", 
+     RowBox[{"preTaxLow", "\[Rule]", "4.949999999999999`"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"postTax", "\[Rule]", "7.`"}], ",", 
+     RowBox[{"preTaxHigh", "\[Rule]", "5.`"}], ",", 
+     RowBox[{"preTaxLow", "\[Rule]", "5.`"}]}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.9068905599295397`*^9, 3.906890582852208*^9}, {
+   3.906890687519814*^9, 3.9068907413379374`*^9}, {3.906890785662225*^9, 
+   3.9068908091841993`*^9}, 3.906890844292169*^9, 3.906890923431654*^9, 
+   3.90691026412694*^9, 3.906912034795622*^9},
+ CellLabel->"Out[3]=",ExpressionUUID->"836773ff-fd54-4804-9150-298d3d0737e5"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Join", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"postTax", "->", "postTaxProfits"}], "}"}], ",", 
+      "preTaxProfits"}], "]"}], "/.", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"qH", " ", "->", " ", "71"}], ",", 
+      RowBox[{"pH", "->", "1.2"}], ",", 
+      RowBox[{"qL", "->", "166"}], ",", 
+      RowBox[{"pL", "->", "0.8"}], ",", 
+      RowBox[{"tH", "->", "0.25"}], ",", 
+      RowBox[{"tL", "->", "0.1"}], ",", 
+      RowBox[{"c", "->", "0.5"}]}], "}"}]}], ",", 
+   RowBox[{
+    RowBox[{"Join", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"postTax", "->", "postTaxProfits"}], "}"}], ",", 
+      "preTaxProfits"}], "]"}], "/.", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"qH", " ", "->", " ", "100"}], ",", 
+      RowBox[{"pH", "->", "1"}], ",", 
+      RowBox[{"qL", "->", "100"}], ",", 
+      RowBox[{"pL", "->", "1"}], ",", 
+      RowBox[{"tH", "->", "0.25"}], ",", 
+      RowBox[{"tL", "->", "0.1"}], ",", 
+      RowBox[{"c", "->", "0.5"}]}], "}"}]}]}], "}"}]], "Input",
+ CellChangeTimes->{{3.906890264089055*^9, 3.9068907398981667`*^9}, {
+  3.906890777671248*^9, 3.906890865461314*^9}, {3.906890904619403*^9, 
+  3.906890922120743*^9}, {3.906890955116537*^9, 3.906890957618575*^9}, {
+  3.9068910236981783`*^9, 3.906891030215374*^9}, {3.9068911554170732`*^9, 
+  3.9068911660443373`*^9}, {3.90690998368843*^9, 3.906910007516882*^9}, {
+  3.906910092721538*^9, 3.906910119059394*^9}, {3.906910201040867*^9, 
+  3.9069102012272673`*^9}, {3.906912028577126*^9, 3.906912051171023*^9}, {
+  3.906914330479279*^9, 3.906914345245832*^9}, {3.906914392500207*^9, 
+  3.906914401860327*^9}},
+ CellLabel->"In[13]:=",ExpressionUUID->"3c844328-6d47-4ba3-8e83-1551a53f4a86"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"postTax", "\[Rule]", "83.71692660550458`"}], ",", 
+     RowBox[{"preTaxHigh", "\[Rule]", "49.7`"}], ",", 
+     RowBox[{"preTaxLow", "\[Rule]", "49.80000000000001`"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"postTax", "\[Rule]", "82.5`"}], ",", 
+     RowBox[{"preTaxHigh", "\[Rule]", "50.`"}], ",", 
+     RowBox[{"preTaxLow", "\[Rule]", "50.`"}]}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.9068905599295397`*^9, 3.906890582852208*^9}, {
+   3.906890687519814*^9, 3.9068907413379374`*^9}, {3.906890785662225*^9, 
+   3.9068908091841993`*^9}, 3.906890923457078*^9, {3.9068910064479*^9, 
+   3.90689103094806*^9}, {3.906891159684226*^9, 3.906891166351597*^9}, 
+   3.906910264144985*^9, {3.90691203492522*^9, 3.9069120516417522`*^9}, {
+   3.906914335930903*^9, 3.9069143476251574`*^9}, 3.906914402368812*^9},
+ CellLabel->"Out[13]=",ExpressionUUID->"02713cbd-9df0-4838-b152-65f022d3430c"]
+}, Open  ]]
+},
+WindowSize->{808, 767},
+WindowMargins->{{189, Automatic}, {Automatic, 7}},
+FrontEndVersion->"13.3 for Mac OS X ARM (64-bit) (July 24, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"910e1cf0-9947-44c5-bac5-aed988f50fe0"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 2582, 78, 155, "Input",ExpressionUUID->"378d5a96-3d74-4770-a134-1d9ee2eb81a4"],
+Cell[3165, 102, 827, 17, 56, "Output",ExpressionUUID->"836773ff-fd54-4804-9150-298d3d0737e5"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4029, 124, 1763, 42, 94, "Input",ExpressionUUID->"3c844328-6d47-4ba3-8e83-1551a53f4a86"],
+Cell[5795, 168, 990, 19, 56, "Output",ExpressionUUID->"02713cbd-9df0-4838-b152-65f022d3430c"]
+}, Open  ]]
+}
+]
+*)
+

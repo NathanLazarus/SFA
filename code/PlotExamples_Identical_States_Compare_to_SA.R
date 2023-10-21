@@ -4,13 +4,15 @@ plus1_formatter <- function(x) {x +1}
 
 
 data_name = "CocaColaExample"
-plot_file_out = paste0(data_name, "_Price_Distortions.pdf")
+plot_file_out = paste0(data_name, "_Price_Distortions_with_SA_no_sales.pdf")
 
 pricing_data = fread(paste0("code/simmed_data/", data_name, "_with_optimal_prices.csv"))
 
 pricing_data[, N_states := .N, year]
 pricing_data[, year_descr := paste0(N_states, "\nCountries")]
-pricing_data[year == 0, year_descr := "Equivalent\nSales Tax\n(2.7%)"]
+pricing_data[year == 0, year_descr := "Separate\nAccounting"]
+pricing_data = pricing_data[year != 0 | year == 0 & state == 1]
+pricing_data[year == 0, optimal_price := 1]
 pricing_data[year == 1, year_descr := "1\nCountry"]
 pricing_data[, state_descr := fifelse(state == 1, "Country with 10% Higher Taxes", paste0("Country ", state))]
 
@@ -23,7 +25,7 @@ myColors[1] = "#990026"
 names(myColors) = c("Country with 10% Higher Taxes", paste("Country", 2:5))
 colScale = scale_fill_manual(name = "state_descr", values = myColors)
 
-year_descr_order = c("1\nCountry", "2\nCountries", "3\nCountries", "5\nCountries", "10\nCountries", "50\nCountries", "Equivalent\nSales Tax\n(2.7%)")
+year_descr_order = c("1\nCountry", "2\nCountries", "3\nCountries", "5\nCountries", "10\nCountries", "50\nCountries", "Separate\nAccounting")
 
 pricing_data[, year_descr_to_plot := factor(year_descr, levels = year_descr_order)]
 
@@ -43,6 +45,11 @@ pricing_data[, .(firm_id, state, year, optimal_price, optimal_quantity_consumed,
 ggplot(pricing_data[state <= 5], aes(fill=state_descr, y=price_to_plot, x=year_descr_to_plot)) +
   geom_bar(position="dodge", stat="identity") +
   geom_segment(aes(x = 0.55, xend = 1.45, y = 0, yend = 0), color = myColors[1]) +
+  geom_segment(aes(x = 7.45 - .9 / 5 * 5, xend = 7.45 - .9 / 5 * 4, y = 0, yend = 0), color = myColors[2]) +
+  geom_segment(aes(x = 7.45 - .9 / 5 * 4, xend = 7.45 - .9 / 5 * 3, y = 0, yend = 0), color = myColors[3]) +
+  geom_segment(aes(x = 7.45 - .9 / 5 * 3, xend = 7.45 - .9 / 5 * 2, y = 0, yend = 0), color = myColors[4]) +
+  geom_segment(aes(x = 7.45 - .9 / 5 * 2, xend = 7.45 - .9 / 5 * 1, y = 0, yend = 0), color = myColors[5]) +
+  geom_segment(aes(x = 7.45 - .9 / 5, xend = 7.45, y = 0, yend = 0), color = myColors[1]) +
   # # Or to make every bar the same width:
   # geom_bar(position=position_dodge2(width = 0.9, preserve = "single"), stat="identity") +
   # geom_segment(aes(x = 0.91, xend = 1.09, y = 0, yend = 0), color = myColors[1]) +

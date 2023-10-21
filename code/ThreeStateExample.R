@@ -3,12 +3,12 @@ pacman::p_load(data.table, foreach, iterators)
 
 eps_val_everywhere = 6 # markup of 1 / (6 - 1) = 20%
 materials_cost = 100 # 1 # 5/6
-wage_val = 1 # 5/12 # 1
-rental_rate_val = 1 # 5/12 # 1
+wage_val = 5/12 # 1
+rental_rate_val = 5/12 # 1
 alpha_val = 0.5 # 0.3
 A_val = 1
-iceberg_trade_cost_everywhere = 0 # 0.02
-non_iceberg_trade_cost_everywhere = 0
+iceberg_trade_cost_everywhere = 0.01 # 0.02
+non_iceberg_trade_cost_everywhere = 0.01
 Lbar_val = 27.848558398 # 1
 # rho_val = 3.8 # midpoint of Kroft et al. construction estimates, markdown of 1 / (3.8 + 1) = 21%
 rho_val = Inf
@@ -58,7 +58,7 @@ three_state_data[, `:=`(
 )]
 
 
-# three_state_data[state == 1 & year == 0, sales_tax_rate := FA_tax_rate_in_raising_state * 1 / eps_val_everywhere]
+three_state_data[state == 1 & year == 0, sales_tax_rate := FA_tax_increase_in_raising_state * 1 / eps_val_everywhere]
 three_state_data[state == 1 & year > 0, FA_tax_rate := FA_tax_rate_everywhere + FA_tax_increase_in_raising_state]
 # three_state_data[state == 1 & year > 0, separate_acct_tax_rate := FA_tax_rate_in_raising_state]
 # three_state_data[state == 3, FA_tax_rate := 0]
@@ -84,7 +84,7 @@ trade_costs[producing_state == consuming_state, `:=`(
 # trade_costs[producing_state == 1 & consuming_state == 2, iceberg_trade_cost := 0.4]
 
 # three_state_data = three_state_data[year %in% c(1, 2, 3)]
-three_state_data = three_state_data[year %in% c(2)]
+# three_state_data = three_state_data[year %in% c(2)]
 
 fwrite(three_state_data, "code/simmed_data/ThreeStates_params_only.csv")
 

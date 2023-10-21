@@ -4,9 +4,9 @@ import pandas as pd
 import sys
 
 
-data_name = "CocaColaExample"
+data_name = "VaryingRates2d" # "CocaColaExample"
 production_function = "Cobb-Douglas"
-trade = False # Allow for the turning off of trade to solve the model with 50 states without running into dimensionality issues
+trade = False # False # Allow for the turning off of trade to solve the model with 50 states without running into dimensionality issues
 
 # param_vals = pd.read_csv("code/simmed_data/simmed_data_params_only.csv", sep=",")
 param_vals = pd.read_csv("code/simmed_data/" + data_name + "_params_only.csv", sep=",")
@@ -282,7 +282,7 @@ def get_profit_maxmizing_prices(profit_func, params, x0_vals, trade):
 
     # print(f"{q_produced_sol = }")
     # print(solution)
-    # print(f"{trade_matrix_sol = }")
+    print(f"{trade_matrix_sol = }")
     # print(f"{l_sol = }")
     # print(f"{k_sol = }")
     # print(f"{m_sol = }")
