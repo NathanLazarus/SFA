@@ -7,8 +7,8 @@ wage_val = 5/12 # 1
 rental_rate_val = 5/12 # 1
 alpha_val = 0.5 # 0.3
 A_val = 1
-iceberg_trade_cost_everywhere = 0.01 # 0.02
-non_iceberg_trade_cost_everywhere = 0.01
+iceberg_trade_cost_everywhere = 0 # 0.01 # 0.02
+non_iceberg_trade_cost_everywhere = 0 # 0.01
 Lbar_val = 27.848558398 # 1
 # rho_val = 3.8 # midpoint of Kroft et al. construction estimates, markdown of 1 / (3.8 + 1) = 21%
 rho_val = Inf
