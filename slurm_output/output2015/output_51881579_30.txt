@@ -1,0 +1,6 @@
+[1] "Successfully collapsed  data/nielsen_extracts/RMS/2015/Movement_Files/0514_2015/1108_2015.tsv"
+[1] "Successfully collapsed  data/nielsen_extracts/RMS/2015/Movement_Files/0514_2015/1144_2015.tsv"
+[1] "Successfully collapsed  data/nielsen_extracts/RMS/2015/Movement_Files/0514_2015/1077_2015.tsv"
+[1] "Successfully collapsed  data/nielsen_extracts/RMS/2015/Movement_Files/0514_2015/1082_2015.tsv"
+[1] "Successfully collapsed  data/nielsen_extracts/RMS/2015/Movement_Files/0514_2015/1064_2015.tsv"
+[1] "Successfully collapsed  data/nielsen_extracts/RMS/2015/Movement_Files/0514_2015/1071_2015.tsv"

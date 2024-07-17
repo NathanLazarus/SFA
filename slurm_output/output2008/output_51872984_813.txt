@@ -1,0 +1,1 @@
+[1] "Successfully collapsed  ../data/nielsen_extracts/RMS/2008/Movement_Files/4504_2008/7194_2008.tsv"

@@ -1,0 +1,10 @@
+
+Attaching package: ‘zoo’
+
+The following objects are masked from ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+Error in { : task 9 failed - "object 'reg1' not found"
+Calls: %dopar% -> <Anonymous>
+Execution halted

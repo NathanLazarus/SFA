@@ -1,0 +1,11 @@
+
+Attaching package: ‘zoo’
+
+The following objects are masked from ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+Error in `[.data.table`(parents, , `:=`(cali_sales_share, state_sales_share[fips_state_code ==  : 
+  Supplied 2 items to be assigned to group 2067 of size 33 in column 'cali_sales_share'. The RHS length must either be 1 (single values are ok) or match the LHS length exactly. If you wish to 'recycle' the RHS please use rep() explicitly to make this intent clear to readers of your code.
+Calls: [ -> [.data.table
+Execution halted

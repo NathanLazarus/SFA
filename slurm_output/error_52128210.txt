@@ -1,0 +1,15 @@
+
+Attaching package: ‘zoo’
+
+The following objects are masked from ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+There were 28 warnings (use warnings() to see them)
+Error in { : 
+  task 9 failed - "in feols(dlprice_pre ~ post2011 + only_in_cali + pos...: 
+All variables'post2011TRUE', 'only_in_caliTRUE' and
+'post2011TRUE:only_in_caliTRUE' are collinear with the fixed effects. In
+such circumstances, the estimation is void."
+Calls: %dopar% -> <Anonymous>
+Execution halted

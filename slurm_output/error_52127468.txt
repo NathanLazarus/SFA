@@ -1,0 +1,11 @@
+
+Attaching package: ‘zoo’
+
+The following objects are masked from ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+There were 28 warnings (use warnings() to see them)
+Error in { : task 11 failed - "could not find function "as.yearqtr""
+Calls: %dopar% -> <Anonymous>
+Execution halted

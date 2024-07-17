@@ -1,0 +1,17 @@
+error calling combine function:
+<simpleError in rbindlist(l, use.names, fill, idcol): Total rows in the list is 2772063252 which is larger than the maximum number of rows, currently 2147483647>
+error calling combine function:
+<simpleError in rbindlist(l, use.names, fill, idcol): Total rows in the list is 2546265976 which is larger than the maximum number of rows, currently 2147483647>
+error calling combine function:
+<simpleError in rbindlist(l, use.names, fill, idcol): Total rows in the list is 2532483156 which is larger than the maximum number of rows, currently 2147483647>
+error calling combine function:
+<simpleError in rbindlist(l, use.names, fill, idcol): Total rows in the list is 3024641323 which is larger than the maximum number of rows, currently 2147483647>
+error calling combine function:
+<simpleError in rbindlist(l, use.names, fill, idcol): Total rows in the list is 2679449791 which is larger than the maximum number of rows, currently 2147483647>
+error calling combine function:
+<simpleError in rbindlist(l, use.names, fill, idcol): Total rows in the list is 2580508741 which is larger than the maximum number of rows, currently 2147483647>
+error calling combine function:
+<simpleError in rbindlist(l, use.names, fill, idcol): Total rows in the list is 4531544511 which is larger than the maximum number of rows, currently 2147483647>
+error calling combine function:
+<simpleError in rbindlist(l, use.names, fill, idcol): Total rows in the list is 2935931599 which is larger than the maximum number of rows, currently 2147483647>
+[1] "saved extras!"

@@ -1,0 +1,13 @@
+
+Attaching package: ‘zoo’
+
+The following objects are masked from ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+There were 28 warnings (use warnings() to see them)
+There were 28 warnings (use warnings() to see them)
+Error in stopCluster.default() : 
+  argument "cl" is missing, with no default
+Calls: stopCluster -> stopCluster.default
+Execution halted

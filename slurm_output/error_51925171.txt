@@ -1,0 +1,4 @@
+Error in { : 
+  Total rows in the list is 2196930458 which is larger than the maximum number of rows, currently 2147483647
+Calls: %do% ... tryCatch -> tryCatchList -> tryCatchOne -> <Anonymous>
+Execution halted

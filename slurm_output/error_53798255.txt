@@ -1,0 +1,1 @@
+slurmstepd: error: *** JOB 53798255 ON node2515 CANCELLED AT 2024-02-19T21:37:09 ***

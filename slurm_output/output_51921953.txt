@@ -1,0 +1,1 @@
+Fatal error: cannot open file 'code/cleanNielsenStores.R': No such file or directory

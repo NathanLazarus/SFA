@@ -1,0 +1,36 @@
+
+Attaching package: ‘zoo’
+
+The following objects are masked from ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+Warning messages:
+1: In as.data.table.list(x, keep.rownames = keep.rownames, check.names = check.names,  :
+  Item 2 has 0 rows but longest item has 10; filled with NA
+2: In as.data.table.list(x, keep.rownames = keep.rownames, check.names = check.names,  :
+  Item 3 has 0 rows but longest item has 10; filled with NA
+3: In as.data.table.list(x, keep.rownames = keep.rownames, check.names = check.names,  :
+  Item 4 has 0 rows but longest item has 10; filled with NA
+4: In as.data.table.list(x, keep.rownames = keep.rownames, check.names = check.names,  :
+  Item 5 has 0 rows but longest item has 10; filled with NA
+NOTE: 2,517,098 observations removed because of NA values (LHS: 2,517,098).
+The variable 'post2011TRUE' has been removed because of collinearity (see $collin.var).
+NOTE: 36,785,191 observations removed because of NA values (LHS: 34,745,028, RHS: 2,213,165).
+The variable 'post2011TRUE' has been removed because of collinearity (see $collin.var).
+NOTE: 5,685,382 observations removed because of NA values (LHS: 5,492,583, RHS: 208,234).
+The variable 'post2011TRUE' has been removed because of collinearity (see $collin.var).
+NOTE: 2,914,153 observations removed because of NA values (LHS: 2,914,153).
+The variable 'post2011TRUE' has been removed because of collinearity (see $collin.var).
+NOTE: 282,800 observations removed because of NA values (LHS: 282,800).
+The variable 'post2011TRUE' has been removed because of collinearity (see $collin.var).
+NOTE: 22,538,678 observations removed because of NA values (LHS: 22,538,678).
+The variable 'post2011TRUE' has been removed because of collinearity (see $collin.var).
+NOTE: 359,945 observations removed because of NA values (LHS: 359,945).
+The variable 'post2011TRUE' has been removed because of collinearity (see $collin.var).
+NOTE: 34,745,028 observations removed because of NA values (LHS: 34,745,028, RHS: 20,082,924).
+The variable 'post2011TRUE' has been removed because of collinearity (see $collin.var).
+NOTE: 5,492,583 observations removed because of NA values (LHS: 5,492,583, RHS: 3,295,205).
+The variable 'post2011TRUE' has been removed because of collinearity (see $collin.var).
+NOTE: 2,914,153 observations removed because of NA values (LHS: 2,914,153, RHS: 1,331,449).
+The variable 'post2011TRUE' has been removed because of collinearity (see $collin.var).

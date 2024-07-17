@@ -1,0 +1,2 @@
+Error in array_no - 1 : non-numeric argument to binary operator
+Execution halted

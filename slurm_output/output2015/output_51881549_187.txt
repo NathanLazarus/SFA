@@ -1,0 +1,2 @@
+[1] "Successfully collapsed  data/nielsen_extracts/RMS/2015/Movement_Files/6018_2015/8401_2015.tsv"
+[1] "Successfully collapsed  data/nielsen_extracts/RMS/2015/Movement_Files/9599_2015/6073_2015.tsv"

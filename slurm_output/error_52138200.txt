@@ -1,0 +1,8 @@
+
+Attaching package: ‘zoo’
+
+The following objects are masked from ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+slurmstepd: error: *** JOB 52138200 ON node1225 CANCELLED AT 2023-10-20T09:25:30 ***

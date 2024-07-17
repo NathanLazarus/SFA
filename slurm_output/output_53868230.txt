@@ -1,0 +1,4 @@
+error calling combine function:
+<simpleError in rbindlist(l, use.names, fill, idcol): Total rows in the list is 2772063252 which is larger than the maximum number of rows, currently 2147483647>
+error calling combine function:
+<simpleError in rbindlist(l, use.names, fill, idcol): Total rows in the list is 2688750515 which is larger than the maximum number of rows, currently 2147483647>

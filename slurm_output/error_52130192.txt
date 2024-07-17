@@ -1,0 +1,12 @@
+
+Attaching package: ‘zoo’
+
+The following objects are masked from ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+There were 28 warnings (use warnings() to see them)
+Error in { : 
+  task 9 failed - "When deleting columns, i should not be provided"
+Calls: %dopar% -> <Anonymous>
+Execution halted

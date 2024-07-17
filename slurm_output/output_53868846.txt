@@ -1,0 +1,4 @@
+error calling combine function:
+<simpleError in rbindlist(l, use.names, fill, idcol): Total rows in the list is 3200375983 which is larger than the maximum number of rows, currently 2147483647>
+error calling combine function:
+<simpleError: cannot allocate vector of size 13.3 Gb>
