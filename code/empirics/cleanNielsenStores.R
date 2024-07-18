@@ -56,7 +56,7 @@ print("saved extras!")
 movement <- movement[, list(revenue = sum(revenue), quantity = sum(quantity)), by = list(year, quarter, fips_state_code, parent_code, store_code_uc, group)]
 
 # save a file at the store by product group by year level
-saveRDS(movement, "data/nielsen_extracts/stores_groups_aggregate2.Rds") # version 2 temporary, want to make sure the file is unchanged after above edits which added the extras grouping
+saveRDS(movement, "data/nielsen_extracts/stores_groups_aggregate.Rds")
 
 # collapse again to get from revenue by product group and store to total revenue by parent and state
 movement <- movement[, list(revenue = sum(revenue), quantity = sum(quantity)), by = list(year, quarter, fips_state_code, parent_code)]
@@ -69,6 +69,6 @@ movement[, presence_count := .N, by = list(year, quarter, parent_code)]
 
 setkeyv(movement,c("year","quarter","parent_code","fips_state_code"))
 
-saveRDS(movement, "data/nielsen_extracts/parents_states_aggregate2.Rds")
+saveRDS(movement, "data/nielsen_extracts/parents_states_aggregate.Rds")
 
 

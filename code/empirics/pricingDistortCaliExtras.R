@@ -1,3 +1,5 @@
+setwd("/nfs/econlab001/lazarus-factor")
+
 .libPaths(file.path("bin/R/libs"))
 
 library(data.table)
